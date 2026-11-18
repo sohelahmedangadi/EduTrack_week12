@@ -66,16 +66,16 @@ driver_text = {
     "max_quiz": "Low best quiz score",
 }
 action_text = {
-    "Low study hours": "Teacher check-in; agree weekly study goals",
-    "High course load": "Review workload before new enrolments",
-    "Uneven effort across courses": "Counsellor to review course priorities",
-    "Low quiz scores": "Tutoring or revision support",
-    "Very low result in one course": "Tutoring for the weakest course",
-    "Short activity span": "Re-engagement nudge early in each course",
-    "Very little time on one course": "Check whether a course was dropped",
-    "Mostly mobile use": "Check device access and study setting",
-    "Mostly tablet use": "Check device access and study setting",
-    "Low best quiz score": "Tutoring or revision support",
+    "Low study hours": "Study-time check-in",
+    "High course load": "Workload review",
+    "Uneven effort across courses": "Course-priority review",
+    "Low quiz scores": "Tutoring on weak topics",
+    "Very low result in one course": "Tutoring on weakest course",
+    "Short activity span": "Early re-engagement nudge",
+    "Very little time on one course": "Check for a dropped course",
+    "Mostly mobile use": "Check device access",
+    "Mostly tablet use": "Check device access",
+    "Low best quiz score": "Tutoring on weak topics",
 }
 
 top_drivers = []
@@ -101,7 +101,11 @@ for i in range(len(data)):
         review_by.append("Within 1 month")
     else:
         top_drivers.append(", ".join(names))
-        actions.append(action_text[names[0]])
+        steps = []
+        for n in names:                                  # one step per driver, no repeats
+            if action_text[n] not in steps:
+                steps.append(action_text[n])
+        actions.append(" + ".join(steps))
         review_by.append("Within 1 week" if tier == "High" else "Within 1 month")
 data["top_risk_drivers"] = top_drivers
 data["recommended_intervention"] = actions
