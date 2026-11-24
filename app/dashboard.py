@@ -236,10 +236,15 @@ def build_report(school, subject, grade):
 
     heading("Notes")
     pdf.set_font("Helvetica", "", 8)
+    dimension_note = (
+        "School and grade are supplied by enriched_student_dimensions.csv."
+        if "school_name" in records.columns and "grade" in records.columns
+        else "The base data has no school ID or grade; school and grade stand-ins are not real dimensions."
+    )
     pdf.multi_cell(0, 4.4, clean(
         "At-risk flag: logistic regression risk probability of 0.40 or more. Cross-validated accuracy is 81.8% against a proxy "
         "label (a student who completed fewer than half of their enrolled courses), because no manual at-risk list is available yet. "
-        "School and subject are stand-ins (city and course ID); the data has no school ID, grade or subject columns. "
+        f"{dimension_note} Subject is represented by course ID because the data has no subject column. "
         "Interventions are suggestions for staff to review, not decisions."), new_x="LMARGIN", new_y="NEXT")
     return bytes(pdf.output())
 

@@ -15,7 +15,8 @@ These came out of the Week 1 data inventory and still apply:
 ```
 data/raw/          original CSV files (never edited)
 data/processed/    cleaned and joined tables created by the pipeline
-src/               the pipeline scripts (steps 1 to 7)
+data/external/     owner-supplied dimensions and manual at-risk labels
+src/               pipeline scripts (steps 1 to 10)
 app/               Streamlit dashboard (dashboard.py) and its requirements
 outputs/           Week 3 baseline tables; outputs/week6/ holds Week 6 tables and figures
 logs/              cleaning and join logs from the last run
@@ -48,6 +49,8 @@ Or run all seven steps at once with `./run_all.sh`. Run every command from the p
 | 6 | `src/06_statistical_tests.py` | Week 6: ANOVA, Kruskal-Wallis, chi-square, correlations and high vs low engagement tests. |
 | 7 | `src/07_score_students.py` | Week 9: scores every student (out-of-fold risk probability, tier, top drivers, recommended intervention) for the dashboard. |
 | 8 | `src/08_validate_at_risk_model.py` | Optional manual ground-truth validation against `data/external/manual_at_risk_labels.csv`. |
+| 9 | `src/09_validate_acceptance_data.py` | Strictly checks the 15-school, grade and manual-label external inputs. |
+| 10 | `src/10_generate_strategic_brief.py` | Regenerates `reports/EduTrack_Strategic_Brief.pdf`. |
 
 ### Join logic
 
@@ -200,9 +203,9 @@ Not shipped: tracking intervention status (needs a database), a trend by term, a
 
 | Criterion | Status | Detail |
 |---|---|---|
-| At-risk flag with 80% or better accuracy vs manual evaluation, shown with drivers and scores | **Partly met** | 81.8% cross-validated accuracy (precision 66.9%, recall 70.2%) against the documented proxy label. Step 8 performs real manual-label validation when `data/external/manual_at_risk_labels.csv` is supplied. |
-| School comparison across all 15 Bengaluru schools | **Ready when enriched** | The base data cannot identify 15 schools. The dashboard automatically switches to real school names and 15-school comparison when `enriched_student_dimensions.csv` supplies `school_id` and `school_name`; otherwise it uses 10 cities only. |
-| School, Grade and Subject filters work without resetting or breaking | **Ready with enrichment** | Subject and base school (city) filters work across tabs. Grade and real-school filtering activate from `enriched_student_dimensions.csv`; grade and school IDs are not inferred from proxy values. |
+| At-risk flag with 80% or better accuracy vs manual evaluation, shown with drivers and scores | **Pending manual validation** | Proxy validation is 81.8% cross-validated accuracy (66.9% precision, 70.2% recall). Step 8 is ready for an independent teacher list but no manual labels are present. |
+| School comparison across all 15 Bengaluru schools | **Pending external dimensions** | The base data cannot identify 15 schools. The implementation activates real school comparison when `enriched_student_dimensions.csv` supplies exactly 15 names and grades; no real dimensions are present yet. |
+| School, Grade and Subject filters work without resetting or breaking | **Pending external dimensions** | Subject and city stand-in work locally. Real School and Grade filtering activate only when enrichment data is supplied. |
 | Term-end PDF, cleanly formatted, one-click download | **Met** | All 176 School x Subject variants build (1 to 2 pages each); sample PDFs inspected for clipped tables. |
 
 Production checks (local): first load to KPIs in about 4 seconds in a fresh browser context, no login prompt, no Deploy button. The deployed link still needs to be checked in an incognito window after you deploy.
