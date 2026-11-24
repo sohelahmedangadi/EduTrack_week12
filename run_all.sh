@@ -10,5 +10,5 @@ python src/05_segmentation_and_cohorts.py
 python src/06_statistical_tests.py
 python src/07_score_students.py
 python src/08_validate_at_risk_model.py
-python src/09_validate_acceptance_data.py || true
+python src/09_validate_acceptance_data.py
 python src/10_generate_strategic_brief.py

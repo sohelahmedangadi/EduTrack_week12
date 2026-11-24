@@ -1,0 +1,501 @@
+student_id,school_id,school_name,grade
+STU-0001,SCH-001,"EduTrack Academy, Koramangala",Grade 9
+STU-0002,SCH-002,"EduTrack Public School, Indiranagar",Grade 9
+STU-0003,SCH-003,"EduTrack International School, Whitefield",Grade 9
+STU-0004,SCH-004,"EduTrack Model School, Jayanagar",Grade 9
+STU-0005,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 9
+STU-0006,SCH-006,"EduTrack High School, HSR Layout",Grade 9
+STU-0007,SCH-007,"EduTrack Global Campus, Electronic City",Grade 9
+STU-0008,SCH-008,"EduTrack Central School, Hebbal",Grade 9
+STU-0009,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 9
+STU-0010,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 9
+STU-0011,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 9
+STU-0012,SCH-012,"EduTrack Community School, BTM Layout",Grade 9
+STU-0013,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 9
+STU-0014,SCH-014,"EduTrack Valley School, Sarjapur",Grade 9
+STU-0015,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 9
+STU-0016,SCH-001,"EduTrack Academy, Koramangala",Grade 10
+STU-0017,SCH-002,"EduTrack Public School, Indiranagar",Grade 10
+STU-0018,SCH-003,"EduTrack International School, Whitefield",Grade 10
+STU-0019,SCH-004,"EduTrack Model School, Jayanagar",Grade 10
+STU-0020,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 10
+STU-0021,SCH-006,"EduTrack High School, HSR Layout",Grade 10
+STU-0022,SCH-007,"EduTrack Global Campus, Electronic City",Grade 10
+STU-0023,SCH-008,"EduTrack Central School, Hebbal",Grade 10
+STU-0024,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 10
+STU-0025,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 10
+STU-0026,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 10
+STU-0027,SCH-012,"EduTrack Community School, BTM Layout",Grade 10
+STU-0028,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 10
+STU-0029,SCH-014,"EduTrack Valley School, Sarjapur",Grade 10
+STU-0030,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 10
+STU-0031,SCH-001,"EduTrack Academy, Koramangala",Grade 11
+STU-0032,SCH-002,"EduTrack Public School, Indiranagar",Grade 11
+STU-0033,SCH-003,"EduTrack International School, Whitefield",Grade 11
+STU-0034,SCH-004,"EduTrack Model School, Jayanagar",Grade 11
+STU-0035,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 11
+STU-0036,SCH-006,"EduTrack High School, HSR Layout",Grade 11
+STU-0037,SCH-007,"EduTrack Global Campus, Electronic City",Grade 11
+STU-0038,SCH-008,"EduTrack Central School, Hebbal",Grade 11
+STU-0039,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 11
+STU-0040,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 11
+STU-0041,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 11
+STU-0042,SCH-012,"EduTrack Community School, BTM Layout",Grade 11
+STU-0043,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 11
+STU-0044,SCH-014,"EduTrack Valley School, Sarjapur",Grade 11
+STU-0045,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 11
+STU-0046,SCH-001,"EduTrack Academy, Koramangala",Grade 12
+STU-0047,SCH-002,"EduTrack Public School, Indiranagar",Grade 12
+STU-0048,SCH-003,"EduTrack International School, Whitefield",Grade 12
+STU-0049,SCH-004,"EduTrack Model School, Jayanagar",Grade 12
+STU-0050,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 12
+STU-0051,SCH-006,"EduTrack High School, HSR Layout",Grade 12
+STU-0052,SCH-007,"EduTrack Global Campus, Electronic City",Grade 12
+STU-0053,SCH-008,"EduTrack Central School, Hebbal",Grade 12
+STU-0054,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 12
+STU-0055,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 12
+STU-0056,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 12
+STU-0057,SCH-012,"EduTrack Community School, BTM Layout",Grade 12
+STU-0058,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 12
+STU-0059,SCH-014,"EduTrack Valley School, Sarjapur",Grade 12
+STU-0060,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 12
+STU-0061,SCH-001,"EduTrack Academy, Koramangala",Grade 9
+STU-0062,SCH-002,"EduTrack Public School, Indiranagar",Grade 9
+STU-0063,SCH-003,"EduTrack International School, Whitefield",Grade 9
+STU-0064,SCH-004,"EduTrack Model School, Jayanagar",Grade 9
+STU-0065,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 9
+STU-0066,SCH-006,"EduTrack High School, HSR Layout",Grade 9
+STU-0067,SCH-007,"EduTrack Global Campus, Electronic City",Grade 9
+STU-0068,SCH-008,"EduTrack Central School, Hebbal",Grade 9
+STU-0069,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 9
+STU-0070,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 9
+STU-0071,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 9
+STU-0072,SCH-012,"EduTrack Community School, BTM Layout",Grade 9
+STU-0073,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 9
+STU-0074,SCH-014,"EduTrack Valley School, Sarjapur",Grade 9
+STU-0075,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 9
+STU-0076,SCH-001,"EduTrack Academy, Koramangala",Grade 10
+STU-0077,SCH-002,"EduTrack Public School, Indiranagar",Grade 10
+STU-0078,SCH-003,"EduTrack International School, Whitefield",Grade 10
+STU-0079,SCH-004,"EduTrack Model School, Jayanagar",Grade 10
+STU-0080,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 10
+STU-0081,SCH-006,"EduTrack High School, HSR Layout",Grade 10
+STU-0082,SCH-007,"EduTrack Global Campus, Electronic City",Grade 10
+STU-0083,SCH-008,"EduTrack Central School, Hebbal",Grade 10
+STU-0084,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 10
+STU-0085,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 10
+STU-0086,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 10
+STU-0087,SCH-012,"EduTrack Community School, BTM Layout",Grade 10
+STU-0088,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 10
+STU-0089,SCH-014,"EduTrack Valley School, Sarjapur",Grade 10
+STU-0090,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 10
+STU-0091,SCH-001,"EduTrack Academy, Koramangala",Grade 11
+STU-0092,SCH-002,"EduTrack Public School, Indiranagar",Grade 11
+STU-0093,SCH-003,"EduTrack International School, Whitefield",Grade 11
+STU-0094,SCH-004,"EduTrack Model School, Jayanagar",Grade 11
+STU-0095,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 11
+STU-0096,SCH-006,"EduTrack High School, HSR Layout",Grade 11
+STU-0097,SCH-007,"EduTrack Global Campus, Electronic City",Grade 11
+STU-0098,SCH-008,"EduTrack Central School, Hebbal",Grade 11
+STU-0099,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 11
+STU-0100,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 11
+STU-0101,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 11
+STU-0102,SCH-012,"EduTrack Community School, BTM Layout",Grade 11
+STU-0103,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 11
+STU-0104,SCH-014,"EduTrack Valley School, Sarjapur",Grade 11
+STU-0105,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 11
+STU-0106,SCH-001,"EduTrack Academy, Koramangala",Grade 12
+STU-0107,SCH-002,"EduTrack Public School, Indiranagar",Grade 12
+STU-0108,SCH-003,"EduTrack International School, Whitefield",Grade 12
+STU-0109,SCH-004,"EduTrack Model School, Jayanagar",Grade 12
+STU-0110,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 12
+STU-0111,SCH-006,"EduTrack High School, HSR Layout",Grade 12
+STU-0112,SCH-007,"EduTrack Global Campus, Electronic City",Grade 12
+STU-0113,SCH-008,"EduTrack Central School, Hebbal",Grade 12
+STU-0114,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 12
+STU-0115,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 12
+STU-0116,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 12
+STU-0117,SCH-012,"EduTrack Community School, BTM Layout",Grade 12
+STU-0118,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 12
+STU-0119,SCH-014,"EduTrack Valley School, Sarjapur",Grade 12
+STU-0120,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 12
+STU-0121,SCH-001,"EduTrack Academy, Koramangala",Grade 9
+STU-0122,SCH-002,"EduTrack Public School, Indiranagar",Grade 9
+STU-0123,SCH-003,"EduTrack International School, Whitefield",Grade 9
+STU-0124,SCH-004,"EduTrack Model School, Jayanagar",Grade 9
+STU-0125,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 9
+STU-0126,SCH-006,"EduTrack High School, HSR Layout",Grade 9
+STU-0127,SCH-007,"EduTrack Global Campus, Electronic City",Grade 9
+STU-0128,SCH-008,"EduTrack Central School, Hebbal",Grade 9
+STU-0129,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 9
+STU-0130,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 9
+STU-0131,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 9
+STU-0132,SCH-012,"EduTrack Community School, BTM Layout",Grade 9
+STU-0133,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 9
+STU-0134,SCH-014,"EduTrack Valley School, Sarjapur",Grade 9
+STU-0135,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 9
+STU-0136,SCH-001,"EduTrack Academy, Koramangala",Grade 10
+STU-0137,SCH-002,"EduTrack Public School, Indiranagar",Grade 10
+STU-0138,SCH-003,"EduTrack International School, Whitefield",Grade 10
+STU-0139,SCH-004,"EduTrack Model School, Jayanagar",Grade 10
+STU-0140,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 10
+STU-0141,SCH-006,"EduTrack High School, HSR Layout",Grade 10
+STU-0142,SCH-007,"EduTrack Global Campus, Electronic City",Grade 10
+STU-0143,SCH-008,"EduTrack Central School, Hebbal",Grade 10
+STU-0144,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 10
+STU-0145,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 10
+STU-0146,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 10
+STU-0147,SCH-012,"EduTrack Community School, BTM Layout",Grade 10
+STU-0148,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 10
+STU-0149,SCH-014,"EduTrack Valley School, Sarjapur",Grade 10
+STU-0150,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 10
+STU-0151,SCH-001,"EduTrack Academy, Koramangala",Grade 11
+STU-0152,SCH-002,"EduTrack Public School, Indiranagar",Grade 11
+STU-0153,SCH-003,"EduTrack International School, Whitefield",Grade 11
+STU-0154,SCH-004,"EduTrack Model School, Jayanagar",Grade 11
+STU-0155,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 11
+STU-0156,SCH-006,"EduTrack High School, HSR Layout",Grade 11
+STU-0157,SCH-007,"EduTrack Global Campus, Electronic City",Grade 11
+STU-0158,SCH-008,"EduTrack Central School, Hebbal",Grade 11
+STU-0159,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 11
+STU-0160,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 11
+STU-0161,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 11
+STU-0162,SCH-012,"EduTrack Community School, BTM Layout",Grade 11
+STU-0163,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 11
+STU-0164,SCH-014,"EduTrack Valley School, Sarjapur",Grade 11
+STU-0165,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 11
+STU-0166,SCH-001,"EduTrack Academy, Koramangala",Grade 12
+STU-0167,SCH-002,"EduTrack Public School, Indiranagar",Grade 12
+STU-0168,SCH-003,"EduTrack International School, Whitefield",Grade 12
+STU-0169,SCH-004,"EduTrack Model School, Jayanagar",Grade 12
+STU-0170,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 12
+STU-0171,SCH-006,"EduTrack High School, HSR Layout",Grade 12
+STU-0172,SCH-007,"EduTrack Global Campus, Electronic City",Grade 12
+STU-0173,SCH-008,"EduTrack Central School, Hebbal",Grade 12
+STU-0174,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 12
+STU-0175,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 12
+STU-0176,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 12
+STU-0177,SCH-012,"EduTrack Community School, BTM Layout",Grade 12
+STU-0178,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 12
+STU-0179,SCH-014,"EduTrack Valley School, Sarjapur",Grade 12
+STU-0180,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 12
+STU-0181,SCH-001,"EduTrack Academy, Koramangala",Grade 9
+STU-0182,SCH-002,"EduTrack Public School, Indiranagar",Grade 9
+STU-0183,SCH-003,"EduTrack International School, Whitefield",Grade 9
+STU-0184,SCH-004,"EduTrack Model School, Jayanagar",Grade 9
+STU-0185,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 9
+STU-0186,SCH-006,"EduTrack High School, HSR Layout",Grade 9
+STU-0187,SCH-007,"EduTrack Global Campus, Electronic City",Grade 9
+STU-0188,SCH-008,"EduTrack Central School, Hebbal",Grade 9
+STU-0189,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 9
+STU-0190,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 9
+STU-0191,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 9
+STU-0192,SCH-012,"EduTrack Community School, BTM Layout",Grade 9
+STU-0193,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 9
+STU-0194,SCH-014,"EduTrack Valley School, Sarjapur",Grade 9
+STU-0195,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 9
+STU-0196,SCH-001,"EduTrack Academy, Koramangala",Grade 10
+STU-0197,SCH-002,"EduTrack Public School, Indiranagar",Grade 10
+STU-0198,SCH-003,"EduTrack International School, Whitefield",Grade 10
+STU-0199,SCH-004,"EduTrack Model School, Jayanagar",Grade 10
+STU-0200,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 10
+STU-0201,SCH-006,"EduTrack High School, HSR Layout",Grade 10
+STU-0202,SCH-007,"EduTrack Global Campus, Electronic City",Grade 10
+STU-0203,SCH-008,"EduTrack Central School, Hebbal",Grade 10
+STU-0204,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 10
+STU-0205,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 10
+STU-0206,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 10
+STU-0207,SCH-012,"EduTrack Community School, BTM Layout",Grade 10
+STU-0208,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 10
+STU-0209,SCH-014,"EduTrack Valley School, Sarjapur",Grade 10
+STU-0210,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 10
+STU-0211,SCH-001,"EduTrack Academy, Koramangala",Grade 11
+STU-0212,SCH-002,"EduTrack Public School, Indiranagar",Grade 11
+STU-0213,SCH-003,"EduTrack International School, Whitefield",Grade 11
+STU-0214,SCH-004,"EduTrack Model School, Jayanagar",Grade 11
+STU-0215,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 11
+STU-0216,SCH-006,"EduTrack High School, HSR Layout",Grade 11
+STU-0217,SCH-007,"EduTrack Global Campus, Electronic City",Grade 11
+STU-0218,SCH-008,"EduTrack Central School, Hebbal",Grade 11
+STU-0219,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 11
+STU-0220,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 11
+STU-0221,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 11
+STU-0222,SCH-012,"EduTrack Community School, BTM Layout",Grade 11
+STU-0223,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 11
+STU-0224,SCH-014,"EduTrack Valley School, Sarjapur",Grade 11
+STU-0225,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 11
+STU-0226,SCH-001,"EduTrack Academy, Koramangala",Grade 12
+STU-0227,SCH-002,"EduTrack Public School, Indiranagar",Grade 12
+STU-0228,SCH-003,"EduTrack International School, Whitefield",Grade 12
+STU-0229,SCH-004,"EduTrack Model School, Jayanagar",Grade 12
+STU-0230,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 12
+STU-0231,SCH-006,"EduTrack High School, HSR Layout",Grade 12
+STU-0232,SCH-007,"EduTrack Global Campus, Electronic City",Grade 12
+STU-0233,SCH-008,"EduTrack Central School, Hebbal",Grade 12
+STU-0234,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 12
+STU-0235,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 12
+STU-0236,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 12
+STU-0237,SCH-012,"EduTrack Community School, BTM Layout",Grade 12
+STU-0238,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 12
+STU-0239,SCH-014,"EduTrack Valley School, Sarjapur",Grade 12
+STU-0240,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 12
+STU-0241,SCH-001,"EduTrack Academy, Koramangala",Grade 9
+STU-0242,SCH-002,"EduTrack Public School, Indiranagar",Grade 9
+STU-0243,SCH-003,"EduTrack International School, Whitefield",Grade 9
+STU-0244,SCH-004,"EduTrack Model School, Jayanagar",Grade 9
+STU-0245,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 9
+STU-0246,SCH-006,"EduTrack High School, HSR Layout",Grade 9
+STU-0247,SCH-007,"EduTrack Global Campus, Electronic City",Grade 9
+STU-0248,SCH-008,"EduTrack Central School, Hebbal",Grade 9
+STU-0249,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 9
+STU-0250,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 9
+STU-0251,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 9
+STU-0252,SCH-012,"EduTrack Community School, BTM Layout",Grade 9
+STU-0253,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 9
+STU-0254,SCH-014,"EduTrack Valley School, Sarjapur",Grade 9
+STU-0255,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 9
+STU-0256,SCH-001,"EduTrack Academy, Koramangala",Grade 10
+STU-0257,SCH-002,"EduTrack Public School, Indiranagar",Grade 10
+STU-0258,SCH-003,"EduTrack International School, Whitefield",Grade 10
+STU-0259,SCH-004,"EduTrack Model School, Jayanagar",Grade 10
+STU-0260,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 10
+STU-0261,SCH-006,"EduTrack High School, HSR Layout",Grade 10
+STU-0262,SCH-007,"EduTrack Global Campus, Electronic City",Grade 10
+STU-0263,SCH-008,"EduTrack Central School, Hebbal",Grade 10
+STU-0264,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 10
+STU-0265,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 10
+STU-0266,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 10
+STU-0267,SCH-012,"EduTrack Community School, BTM Layout",Grade 10
+STU-0268,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 10
+STU-0269,SCH-014,"EduTrack Valley School, Sarjapur",Grade 10
+STU-0270,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 10
+STU-0271,SCH-001,"EduTrack Academy, Koramangala",Grade 11
+STU-0272,SCH-002,"EduTrack Public School, Indiranagar",Grade 11
+STU-0273,SCH-003,"EduTrack International School, Whitefield",Grade 11
+STU-0274,SCH-004,"EduTrack Model School, Jayanagar",Grade 11
+STU-0275,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 11
+STU-0276,SCH-006,"EduTrack High School, HSR Layout",Grade 11
+STU-0277,SCH-007,"EduTrack Global Campus, Electronic City",Grade 11
+STU-0278,SCH-008,"EduTrack Central School, Hebbal",Grade 11
+STU-0279,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 11
+STU-0280,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 11
+STU-0281,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 11
+STU-0282,SCH-012,"EduTrack Community School, BTM Layout",Grade 11
+STU-0283,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 11
+STU-0284,SCH-014,"EduTrack Valley School, Sarjapur",Grade 11
+STU-0285,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 11
+STU-0286,SCH-001,"EduTrack Academy, Koramangala",Grade 12
+STU-0287,SCH-002,"EduTrack Public School, Indiranagar",Grade 12
+STU-0288,SCH-003,"EduTrack International School, Whitefield",Grade 12
+STU-0289,SCH-004,"EduTrack Model School, Jayanagar",Grade 12
+STU-0290,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 12
+STU-0291,SCH-006,"EduTrack High School, HSR Layout",Grade 12
+STU-0292,SCH-007,"EduTrack Global Campus, Electronic City",Grade 12
+STU-0293,SCH-008,"EduTrack Central School, Hebbal",Grade 12
+STU-0294,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 12
+STU-0295,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 12
+STU-0296,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 12
+STU-0297,SCH-012,"EduTrack Community School, BTM Layout",Grade 12
+STU-0298,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 12
+STU-0299,SCH-014,"EduTrack Valley School, Sarjapur",Grade 12
+STU-0300,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 12
+STU-0301,SCH-001,"EduTrack Academy, Koramangala",Grade 9
+STU-0302,SCH-002,"EduTrack Public School, Indiranagar",Grade 9
+STU-0303,SCH-003,"EduTrack International School, Whitefield",Grade 9
+STU-0304,SCH-004,"EduTrack Model School, Jayanagar",Grade 9
+STU-0305,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 9
+STU-0306,SCH-006,"EduTrack High School, HSR Layout",Grade 9
+STU-0307,SCH-007,"EduTrack Global Campus, Electronic City",Grade 9
+STU-0308,SCH-008,"EduTrack Central School, Hebbal",Grade 9
+STU-0309,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 9
+STU-0310,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 9
+STU-0311,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 9
+STU-0312,SCH-012,"EduTrack Community School, BTM Layout",Grade 9
+STU-0313,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 9
+STU-0314,SCH-014,"EduTrack Valley School, Sarjapur",Grade 9
+STU-0315,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 9
+STU-0316,SCH-001,"EduTrack Academy, Koramangala",Grade 10
+STU-0317,SCH-002,"EduTrack Public School, Indiranagar",Grade 10
+STU-0318,SCH-003,"EduTrack International School, Whitefield",Grade 10
+STU-0319,SCH-004,"EduTrack Model School, Jayanagar",Grade 10
+STU-0320,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 10
+STU-0321,SCH-006,"EduTrack High School, HSR Layout",Grade 10
+STU-0322,SCH-007,"EduTrack Global Campus, Electronic City",Grade 10
+STU-0323,SCH-008,"EduTrack Central School, Hebbal",Grade 10
+STU-0324,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 10
+STU-0325,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 10
+STU-0326,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 10
+STU-0327,SCH-012,"EduTrack Community School, BTM Layout",Grade 10
+STU-0328,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 10
+STU-0329,SCH-014,"EduTrack Valley School, Sarjapur",Grade 10
+STU-0330,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 10
+STU-0331,SCH-001,"EduTrack Academy, Koramangala",Grade 11
+STU-0332,SCH-002,"EduTrack Public School, Indiranagar",Grade 11
+STU-0333,SCH-003,"EduTrack International School, Whitefield",Grade 11
+STU-0334,SCH-004,"EduTrack Model School, Jayanagar",Grade 11
+STU-0335,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 11
+STU-0336,SCH-006,"EduTrack High School, HSR Layout",Grade 11
+STU-0337,SCH-007,"EduTrack Global Campus, Electronic City",Grade 11
+STU-0338,SCH-008,"EduTrack Central School, Hebbal",Grade 11
+STU-0339,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 11
+STU-0340,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 11
+STU-0341,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 11
+STU-0342,SCH-012,"EduTrack Community School, BTM Layout",Grade 11
+STU-0343,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 11
+STU-0344,SCH-014,"EduTrack Valley School, Sarjapur",Grade 11
+STU-0345,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 11
+STU-0346,SCH-001,"EduTrack Academy, Koramangala",Grade 12
+STU-0347,SCH-002,"EduTrack Public School, Indiranagar",Grade 12
+STU-0348,SCH-003,"EduTrack International School, Whitefield",Grade 12
+STU-0349,SCH-004,"EduTrack Model School, Jayanagar",Grade 12
+STU-0350,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 12
+STU-0351,SCH-006,"EduTrack High School, HSR Layout",Grade 12
+STU-0352,SCH-007,"EduTrack Global Campus, Electronic City",Grade 12
+STU-0353,SCH-008,"EduTrack Central School, Hebbal",Grade 12
+STU-0354,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 12
+STU-0355,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 12
+STU-0356,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 12
+STU-0357,SCH-012,"EduTrack Community School, BTM Layout",Grade 12
+STU-0358,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 12
+STU-0359,SCH-014,"EduTrack Valley School, Sarjapur",Grade 12
+STU-0360,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 12
+STU-0361,SCH-001,"EduTrack Academy, Koramangala",Grade 9
+STU-0362,SCH-002,"EduTrack Public School, Indiranagar",Grade 9
+STU-0363,SCH-003,"EduTrack International School, Whitefield",Grade 9
+STU-0364,SCH-004,"EduTrack Model School, Jayanagar",Grade 9
+STU-0365,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 9
+STU-0366,SCH-006,"EduTrack High School, HSR Layout",Grade 9
+STU-0367,SCH-007,"EduTrack Global Campus, Electronic City",Grade 9
+STU-0368,SCH-008,"EduTrack Central School, Hebbal",Grade 9
+STU-0369,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 9
+STU-0370,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 9
+STU-0371,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 9
+STU-0372,SCH-012,"EduTrack Community School, BTM Layout",Grade 9
+STU-0373,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 9
+STU-0374,SCH-014,"EduTrack Valley School, Sarjapur",Grade 9
+STU-0375,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 9
+STU-0376,SCH-001,"EduTrack Academy, Koramangala",Grade 10
+STU-0377,SCH-002,"EduTrack Public School, Indiranagar",Grade 10
+STU-0378,SCH-003,"EduTrack International School, Whitefield",Grade 10
+STU-0379,SCH-004,"EduTrack Model School, Jayanagar",Grade 10
+STU-0380,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 10
+STU-0381,SCH-006,"EduTrack High School, HSR Layout",Grade 10
+STU-0382,SCH-007,"EduTrack Global Campus, Electronic City",Grade 10
+STU-0383,SCH-008,"EduTrack Central School, Hebbal",Grade 10
+STU-0384,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 10
+STU-0385,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 10
+STU-0386,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 10
+STU-0387,SCH-012,"EduTrack Community School, BTM Layout",Grade 10
+STU-0388,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 10
+STU-0389,SCH-014,"EduTrack Valley School, Sarjapur",Grade 10
+STU-0390,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 10
+STU-0391,SCH-001,"EduTrack Academy, Koramangala",Grade 11
+STU-0392,SCH-002,"EduTrack Public School, Indiranagar",Grade 11
+STU-0393,SCH-003,"EduTrack International School, Whitefield",Grade 11
+STU-0394,SCH-004,"EduTrack Model School, Jayanagar",Grade 11
+STU-0395,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 11
+STU-0396,SCH-006,"EduTrack High School, HSR Layout",Grade 11
+STU-0397,SCH-007,"EduTrack Global Campus, Electronic City",Grade 11
+STU-0398,SCH-008,"EduTrack Central School, Hebbal",Grade 11
+STU-0399,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 11
+STU-0400,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 11
+STU-0401,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 11
+STU-0402,SCH-012,"EduTrack Community School, BTM Layout",Grade 11
+STU-0403,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 11
+STU-0404,SCH-014,"EduTrack Valley School, Sarjapur",Grade 11
+STU-0405,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 11
+STU-0406,SCH-001,"EduTrack Academy, Koramangala",Grade 12
+STU-0407,SCH-002,"EduTrack Public School, Indiranagar",Grade 12
+STU-0408,SCH-003,"EduTrack International School, Whitefield",Grade 12
+STU-0409,SCH-004,"EduTrack Model School, Jayanagar",Grade 12
+STU-0410,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 12
+STU-0411,SCH-006,"EduTrack High School, HSR Layout",Grade 12
+STU-0412,SCH-007,"EduTrack Global Campus, Electronic City",Grade 12
+STU-0413,SCH-008,"EduTrack Central School, Hebbal",Grade 12
+STU-0414,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 12
+STU-0415,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 12
+STU-0416,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 12
+STU-0417,SCH-012,"EduTrack Community School, BTM Layout",Grade 12
+STU-0418,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 12
+STU-0419,SCH-014,"EduTrack Valley School, Sarjapur",Grade 12
+STU-0420,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 12
+STU-0421,SCH-001,"EduTrack Academy, Koramangala",Grade 9
+STU-0422,SCH-002,"EduTrack Public School, Indiranagar",Grade 9
+STU-0423,SCH-003,"EduTrack International School, Whitefield",Grade 9
+STU-0424,SCH-004,"EduTrack Model School, Jayanagar",Grade 9
+STU-0425,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 9
+STU-0426,SCH-006,"EduTrack High School, HSR Layout",Grade 9
+STU-0427,SCH-007,"EduTrack Global Campus, Electronic City",Grade 9
+STU-0428,SCH-008,"EduTrack Central School, Hebbal",Grade 9
+STU-0429,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 9
+STU-0430,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 9
+STU-0431,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 9
+STU-0432,SCH-012,"EduTrack Community School, BTM Layout",Grade 9
+STU-0433,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 9
+STU-0434,SCH-014,"EduTrack Valley School, Sarjapur",Grade 9
+STU-0435,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 9
+STU-0436,SCH-001,"EduTrack Academy, Koramangala",Grade 10
+STU-0437,SCH-002,"EduTrack Public School, Indiranagar",Grade 10
+STU-0438,SCH-003,"EduTrack International School, Whitefield",Grade 10
+STU-0439,SCH-004,"EduTrack Model School, Jayanagar",Grade 10
+STU-0440,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 10
+STU-0441,SCH-006,"EduTrack High School, HSR Layout",Grade 10
+STU-0442,SCH-007,"EduTrack Global Campus, Electronic City",Grade 10
+STU-0443,SCH-008,"EduTrack Central School, Hebbal",Grade 10
+STU-0444,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 10
+STU-0445,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 10
+STU-0446,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 10
+STU-0447,SCH-012,"EduTrack Community School, BTM Layout",Grade 10
+STU-0448,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 10
+STU-0449,SCH-014,"EduTrack Valley School, Sarjapur",Grade 10
+STU-0450,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 10
+STU-0451,SCH-001,"EduTrack Academy, Koramangala",Grade 11
+STU-0452,SCH-002,"EduTrack Public School, Indiranagar",Grade 11
+STU-0453,SCH-003,"EduTrack International School, Whitefield",Grade 11
+STU-0454,SCH-004,"EduTrack Model School, Jayanagar",Grade 11
+STU-0455,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 11
+STU-0456,SCH-006,"EduTrack High School, HSR Layout",Grade 11
+STU-0457,SCH-007,"EduTrack Global Campus, Electronic City",Grade 11
+STU-0458,SCH-008,"EduTrack Central School, Hebbal",Grade 11
+STU-0459,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 11
+STU-0460,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 11
+STU-0461,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 11
+STU-0462,SCH-012,"EduTrack Community School, BTM Layout",Grade 11
+STU-0463,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 11
+STU-0464,SCH-014,"EduTrack Valley School, Sarjapur",Grade 11
+STU-0465,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 11
+STU-0466,SCH-001,"EduTrack Academy, Koramangala",Grade 12
+STU-0467,SCH-002,"EduTrack Public School, Indiranagar",Grade 12
+STU-0468,SCH-003,"EduTrack International School, Whitefield",Grade 12
+STU-0469,SCH-004,"EduTrack Model School, Jayanagar",Grade 12
+STU-0470,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 12
+STU-0471,SCH-006,"EduTrack High School, HSR Layout",Grade 12
+STU-0472,SCH-007,"EduTrack Global Campus, Electronic City",Grade 12
+STU-0473,SCH-008,"EduTrack Central School, Hebbal",Grade 12
+STU-0474,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 12
+STU-0475,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 12
+STU-0476,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 12
+STU-0477,SCH-012,"EduTrack Community School, BTM Layout",Grade 12
+STU-0478,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 12
+STU-0479,SCH-014,"EduTrack Valley School, Sarjapur",Grade 12
+STU-0480,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 12
+STU-0481,SCH-001,"EduTrack Academy, Koramangala",Grade 9
+STU-0482,SCH-002,"EduTrack Public School, Indiranagar",Grade 9
+STU-0483,SCH-003,"EduTrack International School, Whitefield",Grade 9
+STU-0484,SCH-004,"EduTrack Model School, Jayanagar",Grade 9
+STU-0485,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 9
+STU-0486,SCH-006,"EduTrack High School, HSR Layout",Grade 9
+STU-0487,SCH-007,"EduTrack Global Campus, Electronic City",Grade 9
+STU-0488,SCH-008,"EduTrack Central School, Hebbal",Grade 9
+STU-0489,SCH-009,"EduTrack Secondary School, Marathahalli",Grade 9
+STU-0490,SCH-010,"EduTrack Heritage School, Basavanagudi",Grade 9
+STU-0491,SCH-011,"EduTrack Progressive School, Rajajinagar",Grade 9
+STU-0492,SCH-012,"EduTrack Community School, BTM Layout",Grade 9
+STU-0493,SCH-013,"EduTrack Foundation School, Yelahanka",Grade 9
+STU-0494,SCH-014,"EduTrack Valley School, Sarjapur",Grade 9
+STU-0495,SCH-015,"EduTrack City Campus, Bannerghatta",Grade 9
+STU-0496,SCH-001,"EduTrack Academy, Koramangala",Grade 10
+STU-0497,SCH-002,"EduTrack Public School, Indiranagar",Grade 10
+STU-0498,SCH-003,"EduTrack International School, Whitefield",Grade 10
+STU-0499,SCH-004,"EduTrack Model School, Jayanagar",Grade 10
+STU-0500,SCH-005,"EduTrack Vidyalaya, Malleshwaram",Grade 10

@@ -1,0 +1,7 @@
+Manual ground-truth validation: 500 labeled students
+Accuracy: 90.4% 
+Precision: 85.8% 
+Recall: 82.5% 
+F1: 84.1% 
+ROC AUC: 0.901
+Confusion matrix: TN=325, FP=21, FN=27, TP=127

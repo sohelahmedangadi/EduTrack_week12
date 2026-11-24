@@ -1,0 +1,16 @@
+course_id,subject,records,avg_quiz_score,completion_rate_pct,avg_hours
+CRS-003,Chemistry,154,66.6,78.6,20.1
+CRS-010,Economics,136,65.5,74.3,21.6
+CRS-014,Physical Education,133,65.8,72.9,9.4
+CRS-001,Mathematics,132,67.8,72.0,22.4
+CRS-005,English Language,151,64.6,70.2,14.7
+CRS-006,English Literature,131,65.2,68.7,12.7
+CRS-013,Data Science & AI,131,63.3,55.0,19.3
+CRS-002,Physics,133,62.1,54.1,29.2
+CRS-011,Environmental Science,154,63.9,53.9,16.9
+CRS-007,Computer Science,132,61.4,53.0,27.2
+CRS-008,History & Civics,131,61.2,50.4,14.1
+CRS-015,Art & Design,143,61.1,42.0,22.2
+CRS-009,Geography,130,58.6,37.7,20.1
+CRS-004,Biology,117,58.4,37.6,28.4
+CRS-012,Mathematics Advanced,136,54.6,34.6,29.9

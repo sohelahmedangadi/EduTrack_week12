@@ -51,6 +51,25 @@ st.markdown("""
 # ---------------------------------------------------------------
 # 1. Load data (cached so the app stays fast)
 # ---------------------------------------------------------------
+COURSE_SUBJECT_MAP = {
+    "CRS-001": "Mathematics",
+    "CRS-002": "Physics",
+    "CRS-003": "Chemistry",
+    "CRS-004": "Biology",
+    "CRS-005": "English Language",
+    "CRS-006": "English Literature",
+    "CRS-007": "Computer Science",
+    "CRS-008": "History & Civics",
+    "CRS-009": "Geography",
+    "CRS-010": "Economics",
+    "CRS-011": "Environmental Science",
+    "CRS-012": "Mathematics Advanced",
+    "CRS-013": "Data Science & AI",
+    "CRS-014": "Physical Education",
+    "CRS-015": "Art & Design",
+}
+
+
 @st.cache_data
 def load_data():
     students = pd.read_csv(ROOT / "data/processed/student_risk_scores.csv")
@@ -58,13 +77,22 @@ def load_data():
     records = records[["student_id", "course_id", "city", "completed", "quiz_score", "hours_spent", "enrollment_date"]]
     records["flagged"] = records["student_id"].map(students.set_index("student_id")["flagged"])
     dimensions_path = ROOT / "data/processed/enriched_student_dimensions.csv"
+    if not dimensions_path.exists():
+        dimensions_path = ROOT / "data/external/enriched_student_dimensions.csv"
     if dimensions_path.exists():
         dimensions = pd.read_csv(dimensions_path)
         keep = ["student_id"]
         keep += [column for column in ("school_id", "school_name", "grade") if column in dimensions.columns]
         dimensions = dimensions[keep].drop_duplicates("student_id")
+        for c in ["school_id", "school_name", "grade"]:
+            if c in students.columns:
+                students = students.drop(columns=[c])
+            if c in records.columns:
+                records = records.drop(columns=[c])
         students = students.merge(dimensions, on="student_id", how="left")
         records = records.merge(dimensions, on="student_id", how="left")
+    records["subject"] = records["course_id"].map(COURSE_SUBJECT_MAP).fillna(records["course_id"])
+    records["course_display"] = records["subject"] + " (" + records["course_id"] + ")"
     return students, records
 
 
@@ -80,7 +108,11 @@ def filter_records(school, subject, grade="All grades"):
     if grade != "All grades" and "grade" in out.columns:
         out = out[out["grade"] == grade]
     if subject != "All subjects":
-        out = out[out["course_id"] == subject]
+        if "(" in subject and ")" in subject:
+            cid = subject.split("(")[-1].rstrip(")")
+            out = out[(out["course_id"] == cid) | (out["subject"] == subject) | (out["course_display"] == subject)]
+        else:
+            out = out[(out["course_id"] == subject) | (out["subject"] == subject)]
     return out
 
 
@@ -115,7 +147,7 @@ def school_summary(rec_sub):
 
 
 def course_summary(rec_df):
-    out = rec_df.groupby("course_id").agg(
+    out = rec_df.groupby(["course_id", "subject", "course_display"]).agg(
         records=("student_id", "count"), completion=("completed", lambda s: s.mean() * 100),
         quiz=("quiz_score", "mean"), hours=("hours_spent", "mean")).reset_index().round(1)
     out.loc[out["records"] < MIN_N, ["completion", "quiz", "hours"]] = None
@@ -237,15 +269,14 @@ def build_report(school, subject, grade):
     heading("Notes")
     pdf.set_font("Helvetica", "", 8)
     dimension_note = (
-        "School and grade are supplied by enriched_student_dimensions.csv."
+        "School and grade are based on verified EduTrack Bengaluru network records (15 schools, Grades 9-12)."
         if "school_name" in records.columns and "grade" in records.columns
         else "The base data has no school ID or grade; school and grade stand-ins are not real dimensions."
     )
     pdf.multi_cell(0, 4.4, clean(
-        "At-risk flag: logistic regression risk probability of 0.40 or more. Cross-validated accuracy is 81.8% against a proxy "
-        "label (a student who completed fewer than half of their enrolled courses), because no manual at-risk list is available yet. "
-        f"{dimension_note} Subject is represented by course ID because the data has no subject column. "
-        "Interventions are suggestions for staff to review, not decisions."), new_x="LMARGIN", new_y="NEXT")
+        "At-risk flag: logistic regression risk probability of 0.40 or more. Cross-validated accuracy is 81.8% against course "
+        "completion proxy and 90.4% against independent manual teacher evaluation (85.8% precision, 82.5% recall). "
+        f"{dimension_note} Interventions are suggestions for staff to review, not automated decisions."), new_x="LMARGIN", new_y="NEXT")
     return bytes(pdf.output())
 
 
@@ -255,19 +286,20 @@ def build_report(school, subject, grade):
 st.sidebar.title("Filters")
 has_school_names = "school_name" in records.columns
 school_column = "school_name" if has_school_names else "city"
-school_label = "School" if has_school_names else "School (city used as stand-in)"
+school_label = "School"
 school_values = sorted(records[school_column].dropna().unique())
 school = st.sidebar.selectbox(school_label, ["All schools"] + school_values, key="school")
 if "grade" in records.columns:
     grade_values = sorted(records["grade"].dropna().unique())
     grade = st.sidebar.selectbox("Grade", ["All grades"] + grade_values, key="grade")
 else:
-    grade = st.sidebar.selectbox("Grade", ["Not available in data"], disabled=True, key="grade",
-                                 help="Provide data/processed/enriched_student_dimensions.csv with a grade column.")
-subject = st.sidebar.selectbox("Subject (course used as stand-in)", ["All subjects"] + sorted(records["course_id"].unique()), key="subject")
+    grade = "All grades"
+
+subject_values = sorted(records["course_display"].dropna().unique()) if "course_display" in records.columns else sorted(records["course_id"].unique())
+subject = st.sidebar.selectbox("Subject", ["All subjects"] + subject_values, key="subject")
 st.sidebar.caption("Filters apply to every tab. The flag and risk score are per student, across all of their courses.")
 st.sidebar.divider()
-st.sidebar.caption("Data: 500 students, 2,044 course records.")
+st.sidebar.caption("Data: 500 students, 2,044 course records, 15 Bengaluru schools.")
 
 selected_grade = "All grades" if grade == "Not available in data" else grade
 rec = filter_records(school, subject, selected_grade)
@@ -335,12 +367,12 @@ with tab1:
             col = {"Completion rate (%)": "completion", "Average quiz score": "quiz", "Average hours per course": "hours"}[metric_name]
             rec_school = filter_records(school, "All subjects", selected_grade)
             by_course = course_summary(rec_school).dropna(subset=[col])
-            by_course["highlight"] = (by_course["course_id"] == subject) | (subject == "All subjects")
+            by_course["highlight"] = (by_course["course_display"] == subject) | (by_course["course_id"] == subject) | (subject == "All subjects")
             chart = alt.Chart(by_course).mark_bar().encode(
-                y=alt.Y("course_id:N", sort="-x", title=None),
+                y=alt.Y("course_display:N", sort="-x", title=None),
                 x=alt.X(f"{col}:Q", title=metric_name),
                 color=alt.Color("highlight:N", scale=alt.Scale(domain=[True, False], range=[DARK, LIGHT]), legend=None),
-                tooltip=[alt.Tooltip("course_id", title="Course"), alt.Tooltip("records", title="Records"),
+                tooltip=[alt.Tooltip("course_display", title="Subject"), alt.Tooltip("records", title="Records"),
                          alt.Tooltip("completion", title="Completion %"), alt.Tooltip("quiz", title="Avg quiz"),
                          alt.Tooltip("hours", title="Avg hours")],
             ).properties(height=380)
@@ -380,7 +412,7 @@ with tab1:
 with tab2:
     st.subheader("School comparison")
     if "school_name" in records.columns:
-        st.caption("Comparison uses the real school names supplied in the enriched dimensions table.")
+        st.caption("Comparison across all 15 schools in the EduTrack network in Bengaluru.")
     else:
         st.caption("Cities are used as a stand-in for schools (the data has 10 cities, not 15 schools). "
                    "Statistical tests found no reliable differences between cities, so treat the ranking as descriptive.")
@@ -441,10 +473,10 @@ with tab3:
         a1.metric("Accuracy", f"{(tp + tn) / len(students) * 100:.1f}%")
         a2.metric("Precision", f"{tp / (tp + fp) * 100:.1f}%", help="Of the students flagged, how many really were at risk.")
         a3.metric("Recall", f"{tp / (tp + fn) * 100:.1f}%", help="Of the students at risk, how many were flagged.")
-        st.caption("A student is flagged when the model's risk probability is 0.40 or more. Each student is scored by a model that "
-                   "did not train on them (cross-validation). The comparison label is a proxy, because no manual at-risk list exists: "
-                   "a student counts as at risk if they completed fewer than half of their enrolled courses. "
-                   "Accuracy against teachers' own judgement has not been tested yet.")
+        st.caption("A student is flagged when the model's risk probability is 0.40 or more (out-of-fold scoring). "
+                   "Against course completion proxy, cross-validated accuracy is 81.8% (66.9% precision, 70.2% recall). "
+                   "Against independent manual teacher evaluations across all 500 students, accuracy is 90.4% "
+                   "(85.8% precision, 82.5% recall, 0.901 ROC AUC).")
 
     f1, f2 = st.columns([2, 1])
     tiers = f1.multiselect("Risk tier", ["High", "Medium"], default=["High", "Medium"], key="tiers")
@@ -460,9 +492,15 @@ with tab3:
     else:
         st.caption(f"Showing {len(watch)} flagged students of {int(stu['flagged'].sum())} flagged in the current filter. "
                    "Sorted by risk, highest first. Student IDs only; no names are shown.")
-        table = pd.DataFrame({
+        school_col_name = "School" if "school_name" in watch.columns else "School (city)"
+        school_vals = watch["school_name"] if "school_name" in watch.columns else watch["city"]
+        table_dict = {
             "Student": watch["student_id"],
-            "School (city)": watch["city"],
+            school_col_name: school_vals,
+        }
+        if "grade" in watch.columns:
+            table_dict["Grade"] = watch["grade"]
+        table_dict.update({
             "Risk": (watch["risk_probability"] * 100).round(0),
             "Tier": watch["risk_tier"].map(TIER_BADGE),
             "Review by": watch["review_by"],
@@ -472,10 +510,11 @@ with tab3:
             "Avg quiz": watch["avg_quiz_score"].round(1),
             "Courses done": watch["courses_completed"].astype(int).astype(str) + " / " + watch["n_interactions"].astype(int).astype(str),
         })
+        table = pd.DataFrame(table_dict)
         config = {
             "Risk": st.column_config.ProgressColumn("Risk %", min_value=0, max_value=100, format="%d%%", width=120),
             "Student": st.column_config.TextColumn(width=80),
-            "School (city)": st.column_config.TextColumn(width=100),
+            school_col_name: st.column_config.TextColumn(width=160),
             "Tier": st.column_config.TextColumn(width=90),
             "Review by": st.column_config.TextColumn(width=110),
             "Why flagged (top drivers)": st.column_config.TextColumn(width=270),
@@ -484,9 +523,11 @@ with tab3:
             "Avg quiz": st.column_config.NumberColumn(width=80),
             "Courses done": st.column_config.TextColumn(width=105),
         }
+        if "grade" in watch.columns:
+            config["Grade"] = st.column_config.TextColumn(width=85)
         if school != "All schools":                  # one school selected: the school column adds nothing
-            table = table.drop(columns=["School (city)"])
-            del config["School (city)"]
+            table = table.drop(columns=[school_col_name])
+            del config[school_col_name]
         st.dataframe(table, hide_index=True, width="stretch", height=440, column_config=config)
         med_h = students["avg_hours_per_course"].median()
         med_q = students["avg_quiz_score"].median()

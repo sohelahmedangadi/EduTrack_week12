@@ -1,5 +1,6 @@
 interactions with no matching student (orphans): 0 -> removed
 students with no interactions: 0
+enriched dimensions joined: 15 schools, 4 grades
 interactions_joined: 2044 rows
 enrollments matching a student: 0 of 497
 enrollments orphaned (no matching student): 497 -> kept separately, not joined

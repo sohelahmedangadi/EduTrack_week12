@@ -8,6 +8,7 @@ Writes: data/processed/interactions_joined.csv   (one row per student + course)
         data/processed/enrollments_checked.csv   (enrollments + student_found flag)
         logs/02_join_log.txt
 """
+from pathlib import Path
 import pandas as pd
 
 # --- Rule settings for the first at-risk flag (change these to experiment) ---
@@ -21,6 +22,24 @@ def note(text):
     print(text)
     log.append(text)
 
+
+COURSE_SUBJECT_MAP = {
+    "CRS-001": "Mathematics",
+    "CRS-002": "Physics",
+    "CRS-003": "Chemistry",
+    "CRS-004": "Biology",
+    "CRS-005": "English Language",
+    "CRS-006": "English Literature",
+    "CRS-007": "Computer Science",
+    "CRS-008": "History & Civics",
+    "CRS-009": "Geography",
+    "CRS-010": "Economics",
+    "CRS-011": "Environmental Science",
+    "CRS-012": "Mathematics Advanced",
+    "CRS-013": "Data Science & AI",
+    "CRS-014": "Physical Education",
+    "CRS-015": "Art & Design",
+}
 
 students = pd.read_csv("data/processed/students_clean.csv")
 inter = pd.read_csv("data/processed/interactions_clean.csv")
@@ -37,6 +56,19 @@ no_activity = ~students["student_id"].isin(inter["student_id"])
 note(f"students with no interactions: {no_activity.sum()}")
 
 joined = inter.merge(students, on="student_id", how="left")
+joined["subject"] = joined["course_id"].map(COURSE_SUBJECT_MAP).fillna(joined["course_id"])
+
+# Enriched dimensions (15 real schools and grades)
+dim_path = Path("data/processed/enriched_student_dimensions.csv")
+if not dim_path.exists():
+    dim_path = Path("data/external/enriched_student_dimensions.csv")
+
+dimensions = None
+if dim_path.exists():
+    dimensions = pd.read_csv(dim_path)[["student_id", "school_id", "school_name", "grade"]].drop_duplicates("student_id")
+    joined = joined.merge(dimensions, on="student_id", how="left")
+    note(f"enriched dimensions joined: {dimensions['school_name'].nunique()} schools, {dimensions['grade'].nunique()} grades")
+
 note(f"interactions_joined: {len(joined)} rows")
 
 # ---------------------------------------------------------------
@@ -66,8 +98,12 @@ features = joined.groupby("student_id").agg(
 # completion rate = courses completed / courses taken
 features["completion_rate"] = features["courses_completed"] / features["n_interactions"]
 
-# add student details back (city, profile, joined_date)
-features = features.merge(students[["student_id", "city", "profile", "joined_date"]], on="student_id", how="left")
+# add student details back (city, profile, joined_date, school, grade)
+student_details = students[["student_id", "city", "profile", "joined_date"]]
+if dimensions is not None:
+    student_details = student_details.merge(dimensions, on="student_id", how="left")
+
+features = features.merge(student_details, on="student_id", how="left")
 
 # ---------------------------------------------------------------
 # 4. First rule-based at-risk flag

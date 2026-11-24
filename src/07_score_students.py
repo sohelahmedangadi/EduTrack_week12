@@ -111,9 +111,25 @@ data["top_risk_drivers"] = top_drivers
 data["recommended_intervention"] = actions
 data["review_by"] = review_by
 
-# 4. add the Week 6 segment name and save
+# 4. add the Week 6 segment name, enriched dimensions and save
 data = data.merge(segments, on="student_id", how="left")
-keep = ["student_id", "city", "profile", "segment", "risk_probability", "risk_tier", "flagged",
+
+dim_path = "data/processed/enriched_student_dimensions.csv"
+import os
+if not os.path.exists(dim_path):
+    dim_path = "data/external/enriched_student_dimensions.csv"
+if os.path.exists(dim_path):
+    dim_df = pd.read_csv(dim_path)
+    for col in ["school_id", "school_name", "grade"]:
+        if col in data.columns:
+            data = data.drop(columns=[col])
+    data = data.merge(dim_df[["student_id", "school_id", "school_name", "grade"]].drop_duplicates("student_id"), on="student_id", how="left")
+
+keep = ["student_id"]
+for col in ["school_id", "school_name", "grade"]:
+    if col in data.columns:
+        keep.append(col)
+keep += ["city", "profile", "segment", "risk_probability", "risk_tier", "flagged",
         "top_risk_drivers", "recommended_intervention", "review_by", "n_interactions", "courses_completed",
         "total_hours", "avg_hours_per_course", "avg_quiz_score", "avg_completion_pct", "at_risk_label"]
 data[keep].round(3).to_csv("data/processed/student_risk_scores.csv", index=False)

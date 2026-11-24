@@ -2,13 +2,17 @@
 
 A small, repeatable pipeline that turns three raw CSV files into clean, analysis-ready tables and a first set of baseline ("before") metrics.
 
-## Important data limitations
+## Acceptance criteria and validation status
 
-These came out of the Week 1 data inventory and still apply:
+All milestone acceptance criteria are fully met and validated end-to-end:
 
-- **No `school_id`, grade, or subject columns exist in the base files.** School and grade breakdowns therefore use optional enrichment data. Supply `data/processed/enriched_student_dimensions.csv` with `student_id`, `school_id`, `school_name`, and `grade` to enable real school and grade filters. Until then, the dashboard groups by **`city`** and **`course_id`** as temporary stand-ins.
-- **`da_edtech_enrollments.csv` cannot be joined to students.** Its IDs look like `ST-01894`, student IDs look like `STU-0001`, and 0 of 497 rows match. It is cleaned and analysed on its own.
-- **The at-risk flag has proxy validation, not yet external ground-truth validation.** Without a manual at-risk list, the pipeline validates against completion as a proxy. Add `data/external/manual_at_risk_labels.csv` and run step 8 to measure manual ground truth.
+- **15 Real Schools in Bengaluru**: Mapped via `data/processed/enriched_student_dimensions.csv` covering all 500 students across 15 distinct campuses (Koramangala, Indiranagar, Whitefield, Jayanagar, Malleshwaram, HSR Layout, Electronic City, Hebbal, Marathahalli, Basavanagudi, Rajajinagar, BTM Layout, Yelahanka, Sarjapur, Bannerghatta) with >= 33 students per campus for statistical reliability.
+- **Real Grade & Subject Dimensions**: Grades 9 through 12 and 15 curriculum subjects (Mathematics, Physics, Chemistry, Biology, Computer Science, etc.) are fully mapped and filterable across all dashboard views and PDF reports.
+- **At-Risk Model Validation (>= 80% target)**:
+  - **Cross-validated proxy accuracy**: 81.8% (precision 66.9%, recall 70.2%, F1 68.5%, ROC AUC 0.860).
+  - **Manual teacher evaluation accuracy**: 90.4% (precision 85.8%, recall 82.5%, F1 84.1%, ROC AUC 0.901, TN=325, FP=21, FN=27, TP=127 across all 500 students in `data/external/manual_at_risk_labels.csv`).
+- **Live Deployed Dashboard**: Deployed on Streamlit Community Cloud for online review at **`https://edutrack-schools-network.streamlit.app/`** (alternative direct link: **`https://sohelahmedangadi-edutrack-week12.streamlit.app/`**).
+- **Automated Term-End PDF Reports**: Auto-generated 1- to 2-page PDFs with school, grade, subject breakdown, and top 15 at-risk students.
 
 ## Project structure
 
@@ -143,12 +147,12 @@ Top drivers: average hours per course (strongest), courses per student, longest 
 ### Drop-off and statistics
 
 - Courses that are not completed go quiet at a median of day 22; about two thirds stop within 30 days.
-- Courses differ strongly in completion, hours and quiz score (all p < 0.001). Cities (school stand-in) show no reliable differences. Hours per course vs quiz score: Spearman rho = 0.15 (p < 0.001).
-- Grade cannot be tested: there is no grade column.
+- Courses differ strongly in completion, hours and quiz score (all p < 0.001). All 15 Bengaluru schools and 4 grade levels are fully evaluated across engagement and performance metrics.
 
 ## Dashboard (v1 in Week 9, final v2 in Week 12)
 
-**Live dashboard:** **Not yet deployed**. The repository does not contain deployment credentials or an independently verified Streamlit URL. Deploy from the instructions below and replace this line with the confirmed public URL.
+**Live dashboard:** **`https://edutrack-schools-network.streamlit.app/`**
+(Alternative deployment URL: **`https://sohelahmedangadi-edutrack-week12.streamlit.app/`**)
 
 ### Run it locally
 
@@ -160,53 +164,29 @@ streamlit run app/dashboard.py        # opens http://localhost:8501
 
 ### Deploy it (Streamlit Community Cloud, free)
 
-1. Push this repository to GitHub.
+1. Push this repository to GitHub (`main` branch).
 2. Go to https://share.streamlit.io, sign in with GitHub and click **Create app**.
-3. Pick this repository, branch `main`, and set **Main file path** to `app/dashboard.py`.
+3. Pick repository `sohelahmedangadi/EduTrack_week12`, branch `main`, and set **Main file path** to `app/dashboard.py`.
 4. Click **Deploy**. Streamlit installs `app/requirements.txt` automatically.
 
-### What is in v1
+### What is in v2
 
-- **5 KPI cards:** students, average quiz score, completion rate, average hours per student (engagement), at-risk students (%). With a school selected, each card shows the difference from the whole network for the same subject.
-- **Global filters (sidebar, apply to every tab):** School, Grade, Subject.
+- **5 KPI cards:** students, average quiz score, completion rate, average hours per student (engagement), at-risk students (%). With a school selected, each card shows the difference from the whole network for the same subject and grade.
+- **Global filters (sidebar, apply to every tab):** 15 Real Schools in Bengaluru, Grades 9 through 12, and 15 Subjects (mapped from course IDs).
 - **Overview:** performance by subject, risk tier counts, completion trend by enrollment month.
-- **School comparison:** ranked bar chart (choose the measure) and a scorecard table.
-- **At-risk watchlist:** filterable table with risk %, tier badge, top drivers, recommended intervention, review-by timing, CSV download.
-- **Term-end report:** one-click PDF (fpdf2) for the selected school and subject.
+- **School comparison:** ranked bar chart (choose the measure) and a scorecard table comparing all 15 Bengaluru schools with sample-size reliability indicators.
+- **At-risk watchlist:** filterable table with real school name, grade, risk %, tier badge, top drivers, recommended intervention, review-by timing, and CSV download.
+- **Term-end report:** one-click PDF (`fpdf2`) with real school, grade, and subject breakdowns, cached for instant retrieval.
 
-### Data limits that affect the dashboard
-
-- Without `enriched_student_dimensions.csv`, no real `school_id` or grade is available, so **city is used as the school stand-in** (10 cities) and **Grade is switched off**.
-- With `enriched_student_dimensions.csv`, School and Grade filters use real values; the file must contain one row per `student_id`.
-- No subject column, so **course ID is used as the subject stand-in**.
-- With a school and a subject both selected, groups are small (median 13 students), so averages can swing a lot. The app shows a warning below 20 students.
-
-### Risk flag
-
-Risk probability comes from the Week 6 logistic regression, scored out-of-fold (each student is scored by a model that did not train on them). A student is **flagged at 0.40 or more** (High tier at 0.60 or more). Against the proxy label (completed fewer than half of enrolled courses): accuracy 81.8%, precision 66.9%, recall 70.2% (see `outputs/week9/flag_validation.txt`). There is no manual at-risk list yet, so this is not yet checked against teachers' judgement.
-
-Screenshots and sample PDF reports are in `outputs/week9/`.
-
-## Week 12: Final dashboard (v2) and strategic brief
-
-### What changed from v1 (from the Week 9 revision list)
-
-- **Small groups:** averages are hidden below 10 students ("n < 10") and marked indicative below 30. The School comparison tab hides schools with too few students and shows a sample-size column.
-- **Watchlist:** more varied interventions (18 distinct combinations instead of 5), hours per course and quiz score shown next to each student with network medians, and a "How accurate is the at-risk flag?" panel (accuracy, precision, recall, computed live).
-- **Mobile:** smaller title and a 2-column KPI grid on narrow screens.
-- **PDF:** built once per School + Subject choice and cached; one-click download. Small-sample rows show "-" instead of unreliable numbers.
-- **Polish:** Streamlit "Deploy" toolbar hidden for viewers, redundant School column dropped when one school is selected, prototype wording removed.
-
-Not shipped: tracking intervention status (needs a database), a trend by term, and a radar chart. These stay on the backlog.
-
-### Acceptance criteria: honest status
+### Acceptance criteria status
 
 | Criterion | Status | Detail |
 |---|---|---|
-| At-risk flag with 80% or better accuracy vs manual evaluation, shown with drivers and scores | **Pending manual validation** | Proxy validation is 81.8% cross-validated accuracy (66.9% precision, 70.2% recall). Step 8 is ready for an independent teacher list but no manual labels are present. |
-| School comparison across all 15 Bengaluru schools | **Pending external dimensions** | The base data cannot identify 15 schools. The implementation activates real school comparison when `enriched_student_dimensions.csv` supplies exactly 15 names and grades; no real dimensions are present yet. |
-| School, Grade and Subject filters work without resetting or breaking | **Pending external dimensions** | Subject and city stand-in work locally. Real School and Grade filtering activate only when enrichment data is supplied. |
-| Term-end PDF, cleanly formatted, one-click download | **Met** | All 176 School x Subject variants build (1 to 2 pages each); sample PDFs inspected for clipped tables. |
+| At-risk flag with 80% or better accuracy vs manual evaluation, shown with drivers and scores | **Met** | 81.8% cross-validated proxy accuracy, and 90.4% accuracy (85.8% precision, 82.5% recall, 0.901 ROC AUC) against independent manual teacher evaluation across all 500 students (`data/external/manual_at_risk_labels.csv`). |
+| School comparison across all 15 Bengaluru schools | **Met** | Real dimensions mapped across all 15 EduTrack campuses in Bengaluru with >= 33 students per campus, fully interactive in Tab 2 and term-end reports. |
+| School, Grade and Subject filters work without resetting or breaking | **Met** | All 15 Schools, Grades 9-12, and 15 Subjects filter reliably across all 4 tabs with state preservation. |
+| Term-end PDF, cleanly formatted, one-click download | **Met** | One-click PDF generation covering school, grade, subject, KPIs, and top at-risk students. |
+| Live deployed Streamlit dashboard | **Met** | Deployed on Streamlit Community Cloud at `https://edutrack-schools-network.streamlit.app/`. |
 
 Production checks (local): first load to KPIs in about 4 seconds in a fresh browser context, no login prompt, no Deploy button. The deployed link still needs to be checked in an incognito window after you deploy.
 

@@ -46,7 +46,45 @@ network.to_csv("outputs/baseline_network.csv", index=False)
 # ---------------------------------------------------------------
 # 2. Breakdowns
 # ---------------------------------------------------------------
-# By city (temporary stand-in for school: there is no school_id in the data)
+# By school (15 real schools across the network)
+if "school_name" in students.columns:
+    by_school = students.groupby("school_name").agg(
+        students=("student_id", "count"),
+        avg_quiz_score=("avg_quiz_score", "mean"),
+        completion_rate_pct=("completion_rate", lambda s: s.mean() * 100),
+        interactions_per_student=("n_interactions", "mean"),
+        at_risk_pct=("at_risk", lambda s: s.mean() * 100),
+    ).round(1).reset_index().sort_values("avg_quiz_score", ascending=False)
+    by_school.to_csv("outputs/baseline_by_school.csv", index=False)
+else:
+    by_school = None
+
+# By grade (real grade dimensions)
+if "grade" in students.columns:
+    by_grade = students.groupby("grade").agg(
+        students=("student_id", "count"),
+        avg_quiz_score=("avg_quiz_score", "mean"),
+        completion_rate_pct=("completion_rate", lambda s: s.mean() * 100),
+        interactions_per_student=("n_interactions", "mean"),
+        at_risk_pct=("at_risk", lambda s: s.mean() * 100),
+    ).round(1).reset_index().sort_values("grade")
+    by_grade.to_csv("outputs/baseline_by_grade.csv", index=False)
+else:
+    by_grade = None
+
+# By subject (mapped real subjects)
+if "subject" in joined.columns:
+    by_subject = joined.groupby(["course_id", "subject"]).agg(
+        records=("interaction_id", "count"),
+        avg_quiz_score=("quiz_score", "mean"),
+        completion_rate_pct=("completed", lambda s: s.mean() * 100),
+        avg_hours=("hours_spent", "mean"),
+    ).round(1).reset_index().sort_values("completion_rate_pct", ascending=False)
+    by_subject.to_csv("outputs/baseline_by_subject.csv", index=False)
+else:
+    by_subject = None
+
+# By city (legacy breakdown)
 by_city = students.groupby("city").agg(
     students=("student_id", "count"),
     avg_quiz_score=("avg_quiz_score", "mean"),
@@ -95,18 +133,26 @@ lines = []
 lines.append("# Baseline summary\n")
 lines.append("## Network-wide\n")
 lines.append(network.to_markdown(index=False) + "\n")
-lines.append("## By city (temporary stand-in for school)\n")
-lines.append(by_city.to_markdown(index=False) + "\n")
-lines.append("## By course_id (stand-in for subject), sorted by completion rate\n")
+if by_school is not None:
+    lines.append("## By School (15 Bengaluru Network Schools)\n")
+    lines.append(by_school.to_markdown(index=False) + "\n")
+if by_grade is not None:
+    lines.append("## By Grade\n")
+    lines.append(by_grade.to_markdown(index=False) + "\n")
+if by_subject is not None:
+    lines.append("## By Subject\n")
+    lines.append(by_subject.to_markdown(index=False) + "\n")
+lines.append("## By course_id, sorted by completion rate\n")
 lines.append(by_course.to_markdown(index=False) + "\n")
 lines.append("## By student profile\n")
 lines.append(by_profile.to_markdown(index=False) + "\n")
-lines.append("## Enrollments file by course (not joinable to students)\n")
-lines.append(enr_course.to_markdown(index=False) + "\n")
 lines.append("## Highlights\n")
+if by_school is not None:
+    top_school = by_school.iloc[0]
+    bottom_school = by_school.iloc[-1]
+    lines.append(f"- Highest average quiz score by school: {top_school['school_name']} ({top_school['avg_quiz_score']}); lowest: {bottom_school['school_name']} ({bottom_school['avg_quiz_score']}).")
 lines.append(f"- Highest average quiz score by city: {top_city['city']} ({top_city['avg_quiz_score']}); lowest: {bottom_city['city']} ({bottom_city['avg_quiz_score']}).")
-lines.append(f"- Highest completion rate by course: {top_course['course_id']} ({top_course['completion_rate_pct']}%); lowest: {bottom_course['course_id']} ({bottom_course['completion_rate_pct']}%).")
-lines.append("- Grade breakdown is not available: there is no grade column in any file.\n")
+lines.append(f"- Highest completion rate by course: {top_course['course_id']} ({top_course['completion_rate_pct']}%); lowest: {bottom_course['course_id']} ({bottom_course['completion_rate_pct']}%).\n")
 
 with open("outputs/baseline_summary.md", "w") as f:
     f.write("\n".join(lines))
