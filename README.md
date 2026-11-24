@@ -6,9 +6,9 @@ A small, repeatable pipeline that turns three raw CSV files into clean, analysis
 
 These came out of the Week 1 data inventory and still apply:
 
-- **No `school_id`, grade, or subject columns exist in any file.** School and grade breakdowns cannot be built from this data. As a temporary stand-in, results are grouped by **`city`** (for school) and **`course_id`** (for subject). Please read these as placeholders, not real school results.
+- **No `school_id`, grade, or subject columns exist in the base files.** School and grade breakdowns therefore use optional enrichment data. Supply `data/processed/enriched_student_dimensions.csv` with `student_id`, `school_id`, `school_name`, and `grade` to enable real school and grade filters. Until then, the dashboard groups by **`city`** and **`course_id`** as temporary stand-ins.
 - **`da_edtech_enrollments.csv` cannot be joined to students.** Its IDs look like `ST-01894`, student IDs look like `STU-0001`, and 0 of 497 rows match. It is cleaned and analysed on its own.
-- **The at-risk flag is an initial rule, not a validated model.** There is no manual at-risk list yet, so the 80% accuracy target cannot be measured. The flag rate is reported only.
+- **The at-risk flag has proxy validation, not yet external ground-truth validation.** Without a manual at-risk list, the pipeline validates against completion as a proxy. Add `data/external/manual_at_risk_labels.csv` and run step 8 to measure manual ground truth.
 
 ## Project structure
 
@@ -20,7 +20,7 @@ app/               Streamlit dashboard (dashboard.py) and its requirements
 outputs/           Week 3 baseline tables; outputs/week6/ holds Week 6 tables and figures
 logs/              cleaning and join logs from the last run
 notebooks/         space for exploration notebooks
-run_all.sh         runs all three steps in order
+run_all.sh         runs all pipeline steps in order
 ```
 
 ## How to run
@@ -47,6 +47,7 @@ Or run all seven steps at once with `./run_all.sh`. Run every command from the p
 | 5 | `src/05_segmentation_and_cohorts.py` | Week 6: K-Means student segments, cohort heatmap, drop-off curve, monthly trend. |
 | 6 | `src/06_statistical_tests.py` | Week 6: ANOVA, Kruskal-Wallis, chi-square, correlations and high vs low engagement tests. |
 | 7 | `src/07_score_students.py` | Week 9: scores every student (out-of-fold risk probability, tier, top drivers, recommended intervention) for the dashboard. |
+| 8 | `src/08_validate_at_risk_model.py` | Optional manual ground-truth validation against `data/external/manual_at_risk_labels.csv`. |
 
 ### Join logic
 
@@ -144,7 +145,7 @@ Top drivers: average hours per course (strongest), courses per student, longest 
 
 ## Dashboard (v1 in Week 9, final v2 in Week 12)
 
-**Live dashboard:** _paste your Streamlit URL here after deploying_
+**Live dashboard:** **Not yet deployed**. The repository does not contain deployment credentials or an independently verified Streamlit URL. Deploy from the instructions below and replace this line with the confirmed public URL.
 
 ### Run it locally
 
@@ -159,7 +160,7 @@ streamlit run app/dashboard.py        # opens http://localhost:8501
 1. Push this repository to GitHub.
 2. Go to https://share.streamlit.io, sign in with GitHub and click **Create app**.
 3. Pick this repository, branch `main`, and set **Main file path** to `app/dashboard.py`.
-4. Click **Deploy**. Streamlit installs `app/requirements.txt` automatically. Paste the app URL above.
+4. Click **Deploy**. Streamlit installs `app/requirements.txt` automatically.
 
 ### What is in v1
 
@@ -172,8 +173,8 @@ streamlit run app/dashboard.py        # opens http://localhost:8501
 
 ### Data limits that affect the dashboard
 
-- No `school_id` in the data, so **city is used as the school stand-in** (10 cities, not 15 schools).
-- No grade column, so the **Grade filter is switched off** and labelled "Not available in data".
+- Without `enriched_student_dimensions.csv`, no real `school_id` or grade is available, so **city is used as the school stand-in** (10 cities) and **Grade is switched off**.
+- With `enriched_student_dimensions.csv`, School and Grade filters use real values; the file must contain one row per `student_id`.
 - No subject column, so **course ID is used as the subject stand-in**.
 - With a school and a subject both selected, groups are small (median 13 students), so averages can swing a lot. The app shows a warning below 20 students.
 
@@ -199,9 +200,9 @@ Not shipped: tracking intervention status (needs a database), a trend by term, a
 
 | Criterion | Status | Detail |
 |---|---|---|
-| At-risk flag with 80% or better accuracy vs manual evaluation, shown with drivers and scores | **Partly met** | 81.8% cross-validated accuracy (precision 66.9%, recall 70.2%) against a proxy label. Shown in the app with risk %, tier and drivers. Not tested against teachers' own list because none exists. |
-| School comparison across all 15 Bengaluru schools | **Not met** | The data has no school ID and only 10 cities. The comparison uses city as a stand-in. |
-| School, Grade and Subject filters work without resetting or breaking | **Partly met** | School and Subject work and persist across tabs (all 176 combinations tested, no errors). Grade is switched off because there is no grade column. |
+| At-risk flag with 80% or better accuracy vs manual evaluation, shown with drivers and scores | **Partly met** | 81.8% cross-validated accuracy (precision 66.9%, recall 70.2%) against the documented proxy label. Step 8 performs real manual-label validation when `data/external/manual_at_risk_labels.csv` is supplied. |
+| School comparison across all 15 Bengaluru schools | **Ready when enriched** | The base data cannot identify 15 schools. The dashboard automatically switches to real school names and 15-school comparison when `enriched_student_dimensions.csv` supplies `school_id` and `school_name`; otherwise it uses 10 cities only. |
+| School, Grade and Subject filters work without resetting or breaking | **Ready with enrichment** | Subject and base school (city) filters work across tabs. Grade and real-school filtering activate from `enriched_student_dimensions.csv`; grade and school IDs are not inferred from proxy values. |
 | Term-end PDF, cleanly formatted, one-click download | **Met** | All 176 School x Subject variants build (1 to 2 pages each); sample PDFs inspected for clipped tables. |
 
 Production checks (local): first load to KPIs in about 4 seconds in a fresh browser context, no login prompt, no Deploy button. The deployed link still needs to be checked in an incognito window after you deploy.

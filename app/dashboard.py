@@ -8,8 +8,9 @@ Data used (created by the pipeline in src/):
   data/processed/interactions_joined.csv   one row per student + course
 
 Data limits (also shown in the app):
-  * No school_id in the data, so CITY is used as a stand-in for school (10 cities, not 15 schools).
-  * No grade column, so the Grade filter is switched off.
+  * The base data has no school_id or grade. When an enriched dimensions table is
+    provided, real school and grade filters are enabled; otherwise city remains
+    a stand-in and grade is disabled.
   * No subject column, so COURSE ID is used as a stand-in for subject.
 
 Changes from v1 (from the Week 9 revision list):
@@ -56,17 +57,28 @@ def load_data():
     records = pd.read_csv(ROOT / "data/processed/interactions_joined.csv", parse_dates=["enrollment_date"])
     records = records[["student_id", "course_id", "city", "completed", "quiz_score", "hours_spent", "enrollment_date"]]
     records["flagged"] = records["student_id"].map(students.set_index("student_id")["flagged"])
+    dimensions_path = ROOT / "data/processed/enriched_student_dimensions.csv"
+    if dimensions_path.exists():
+        dimensions = pd.read_csv(dimensions_path)
+        keep = ["student_id"]
+        keep += [column for column in ("school_id", "school_name", "grade") if column in dimensions.columns]
+        dimensions = dimensions[keep].drop_duplicates("student_id")
+        students = students.merge(dimensions, on="student_id", how="left")
+        records = records.merge(dimensions, on="student_id", how="left")
     return students, records
 
 
 students, records = load_data()
 
 
-def filter_records(school, subject):
-    """Records for the chosen school and subject."""
+def filter_records(school, subject, grade="All grades"):
+    """Records for the chosen school, grade and subject."""
     out = records
     if school != "All schools":
-        out = out[out["city"] == school]
+        school_column = "school_name" if "school_name" in out.columns else "city"
+        out = out[out[school_column] == school]
+    if grade != "All grades" and "grade" in out.columns:
+        out = out[out["grade"] == grade]
     if subject != "All subjects":
         out = out[out["course_id"] == subject]
     return out
@@ -85,12 +97,17 @@ def kpis(rec_df, stu_df):
 
 
 def school_summary(rec_sub):
-    """One row per school (city): students, averages, at-risk share. Small groups are hidden."""
-    out = rec_sub.groupby("city").agg(
+    """One row per school: students, averages, at-risk share. Small groups are hidden."""
+    school_column = "school_name" if "school_name" in rec_sub.columns else "city"
+    out = rec_sub.groupby(school_column).agg(
         students=("student_id", "nunique"), quiz=("quiz_score", "mean"),
         completion=("completed", lambda s: s.mean() * 100), hours_total=("hours_spent", "sum")).reset_index()
+    out = out.rename(columns={school_column: "school"})
     out["hours"] = out["hours_total"] / out["students"]
-    out["risk"] = out["city"].map(rec_sub.drop_duplicates("student_id").groupby("city")["flagged"].mean() * 100)
+    student_school = rec_sub.drop_duplicates("student_id")
+    out["risk"] = out["school"].map(
+        student_school.assign(_school=student_school[school_column]).groupby("_school")["flagged"].mean() * 100
+    )
     out = out.drop(columns="hours_total").round(1)
     out["reliability"] = out["students"].map(lambda n: "Too few" if n < MIN_N else ("Low" if n < LOW_CONF_N else "OK"))
     out.loc[out["students"] < MIN_N, ["quiz", "completion", "hours", "risk"]] = None   # hide unreliable averages
@@ -126,11 +143,11 @@ class ReportPDF(FPDF):
 
 
 @st.cache_data(show_spinner=False)
-def build_report(school, subject):
-    rec = filter_records(school, subject)
+def build_report(school, subject, grade):
+    rec = filter_records(school, subject, grade)
     stu = students[students["student_id"].isin(rec["student_id"])]
     k = kpis(rec, stu)
-    net_rec = filter_records("All schools", subject)
+    net_rec = filter_records("All schools", subject, grade)
     net = kpis(net_rec, students[students["student_id"].isin(net_rec["student_id"])])
     compare = school != "All schools"
     small = k["students"] < MIN_N
@@ -149,7 +166,7 @@ def build_report(school, subject):
     pdf.set_font("Helvetica", "", 12); pdf.set_text_color(60, 60, 60)
     pdf.cell(0, 7, "Term-End Summary Report", new_x="LMARGIN", new_y="NEXT")
     pdf.set_font("Helvetica", "", 9)
-    pdf.cell(0, 6, clean(f"School: {school}   |   Grade: not available in data   |   Subject: {subject}"),
+    pdf.cell(0, 6, clean(f"School: {school}   |   Grade: {grade}   |   Subject: {subject}"),
              new_x="LMARGIN", new_y="NEXT")
     pdf.ln(3)
 
@@ -191,9 +208,9 @@ def build_report(school, subject):
             pdf.ln(2)
 
     if school_table is not None:
-        heading("School comparison (city used as stand-in for school)")
-        draw_table((46, 24, 26, 28, 28, 24), ("School (city)", "Students", "Avg quiz", "Completion %", "Hours / student", "At-risk %"),
-                   [(r.city, r.students, fmt(r.quiz, f"{r.quiz:.1f}"), fmt(r.completion, f"{r.completion:.1f}"),
+        heading("School comparison")
+        draw_table((46, 24, 26, 28, 28, 24), ("School", "Students", "Avg quiz", "Completion %", "Hours / student", "At-risk %"),
+                   [(r.school, r.students, fmt(r.quiz, f"{r.quiz:.1f}"), fmt(r.completion, f"{r.completion:.1f}"),
                      fmt(r.hours, f"{r.hours:.1f}"), fmt(r.risk, f"{r.risk:.1f}")) for r in school_table.itertuples()],
                    aligns=("LEFT",) + ("RIGHT",) * 5)
 
@@ -231,15 +248,24 @@ def build_report(school, subject):
 # 3. Global filters (sidebar, so they stay the same on every tab)
 # ---------------------------------------------------------------
 st.sidebar.title("Filters")
-school = st.sidebar.selectbox("School (city used as stand-in)", ["All schools"] + sorted(records["city"].unique()), key="school")
-st.sidebar.selectbox("Grade", ["Not available in data"], disabled=True, key="grade",
-                     help="The data has no grade column, so this filter cannot work yet.")
+has_school_names = "school_name" in records.columns
+school_column = "school_name" if has_school_names else "city"
+school_label = "School" if has_school_names else "School (city used as stand-in)"
+school_values = sorted(records[school_column].dropna().unique())
+school = st.sidebar.selectbox(school_label, ["All schools"] + school_values, key="school")
+if "grade" in records.columns:
+    grade_values = sorted(records["grade"].dropna().unique())
+    grade = st.sidebar.selectbox("Grade", ["All grades"] + grade_values, key="grade")
+else:
+    grade = st.sidebar.selectbox("Grade", ["Not available in data"], disabled=True, key="grade",
+                                 help="Provide data/processed/enriched_student_dimensions.csv with a grade column.")
 subject = st.sidebar.selectbox("Subject (course used as stand-in)", ["All subjects"] + sorted(records["course_id"].unique()), key="subject")
 st.sidebar.caption("Filters apply to every tab. The flag and risk score are per student, across all of their courses.")
 st.sidebar.divider()
 st.sidebar.caption("Data: 500 students, 2,044 course records.")
 
-rec = filter_records(school, subject)
+selected_grade = "All grades" if grade == "Not available in data" else grade
+rec = filter_records(school, subject, selected_grade)
 
 st.title("EduTrack Academic Performance Dashboard")
 
@@ -255,7 +281,7 @@ too_few = n_students < MIN_N
 # 4. KPI cards
 # ---------------------------------------------------------------
 k = kpis(rec, stu)
-net_rec = filter_records("All schools", subject)       # compare with the SAME subject across the whole network
+net_rec = filter_records("All schools", subject, selected_grade)       # compare with the SAME subject across the whole network
 net = kpis(net_rec, students[students["student_id"].isin(net_rec["student_id"])])
 compare = school != "All schools"
 
@@ -302,7 +328,7 @@ with tab1:
             metric_name = st.radio("Measure", ["Completion rate (%)", "Average quiz score", "Average hours per course"],
                                    horizontal=True, key="subject_metric")
             col = {"Completion rate (%)": "completion", "Average quiz score": "quiz", "Average hours per course": "hours"}[metric_name]
-            rec_school = filter_records(school, "All subjects")
+            rec_school = filter_records(school, "All subjects", selected_grade)
             by_course = course_summary(rec_school).dropna(subset=[col])
             by_course["highlight"] = (by_course["course_id"] == subject) | (subject == "All subjects")
             chart = alt.Chart(by_course).mark_bar().encode(
@@ -348,9 +374,12 @@ with tab1:
 # ---------------------------------------------------------------
 with tab2:
     st.subheader("School comparison")
-    st.caption("Cities are used as a stand-in for schools (the data has 10 cities, not 15 schools). "
-               "Statistical tests found no reliable differences between cities, so treat the ranking as descriptive.")
-    school_stats = school_summary(filter_records("All schools", subject))
+    if "school_name" in records.columns:
+        st.caption("Comparison uses the real school names supplied in the enriched dimensions table.")
+    else:
+        st.caption("Cities are used as a stand-in for schools (the data has 10 cities, not 15 schools). "
+                   "Statistical tests found no reliable differences between cities, so treat the ranking as descriptive.")
+    school_stats = school_summary(filter_records("All schools", subject, selected_grade))
     shown = school_stats.dropna(subset=["quiz"])
     if len(shown) < len(school_stats):
         st.info(f"{len(school_stats) - len(shown)} school(s) have fewer than {MIN_N} students for this subject and are hidden.")
@@ -363,12 +392,12 @@ with tab2:
         mcol = {"Average quiz score": "quiz", "Completion rate (%)": "completion",
                 "Engagement (hours / student)": "hours", "At-risk students (%)": "risk"}[measure]
         plot = shown.copy()
-        plot["highlight"] = (plot["city"] == school) | (school == "All schools")
+        plot["highlight"] = (plot["school"] == school) | (school == "All schools")
         bars = alt.Chart(plot).mark_bar().encode(
-            y=alt.Y("city:N", sort="-x", title=None),
+            y=alt.Y("school:N", sort="-x", title=None),
             x=alt.X(f"{mcol}:Q", title=measure),
             color=alt.Color("highlight:N", scale=alt.Scale(domain=[True, False], range=[DARK, LIGHT]), legend=None),
-            tooltip=[alt.Tooltip("city", title="School (city)"), alt.Tooltip("students", title="Students"),
+            tooltip=[alt.Tooltip("school", title="School"), alt.Tooltip("students", title="Students"),
                      alt.Tooltip("quiz", title="Avg quiz"), alt.Tooltip("completion", title="Completion %"),
                      alt.Tooltip("hours", title="Hours / student"), alt.Tooltip("risk", title="At-risk %"),
                      alt.Tooltip("reliability", title="Sample size")],
@@ -381,7 +410,7 @@ with tab2:
         card = shown.sort_values(mcol, ascending=(mcol == "risk")).reset_index(drop=True)
         card.insert(0, "Rank", card.index + 1)
         st.dataframe(card, hide_index=True, width="stretch", column_config={
-            "city": "School (city)", "students": "Students",
+            "school": "School", "students": "Students",
             "quiz": st.column_config.ProgressColumn("Avg quiz", min_value=0, max_value=100, format="%.1f"),
             "completion": st.column_config.ProgressColumn("Completion %", min_value=0, max_value=100, format="%.1f"),
             "hours": st.column_config.NumberColumn("Hours / student", format="%.1f"),
@@ -467,10 +496,10 @@ with tab3:
 # ---------------------------------------------------------------
 with tab4:
     st.subheader("Term-end report")
-    st.write(f"The report covers the current selection: **{school}**, grade not available in data, **{subject}**. "
+    st.write(f"The report covers the current selection: **{school}**, **{grade}**, **{subject}**. "
              "It includes key indicators, subject performance and the top 15 at-risk students"
              + (", plus a comparison of all schools." if school == "All schools" else "."))
     file_label = school.replace(" ", "_").lower()
-    st.download_button("Download term-end PDF report", build_report(school, subject),
+    st.download_button("Download term-end PDF report", build_report(school, subject, selected_grade),
                        file_name=f"edutrack_term_report_{file_label}.pdf", mime="application/pdf",
                        type="primary", on_click="ignore")

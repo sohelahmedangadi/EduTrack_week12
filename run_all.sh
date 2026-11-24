@@ -9,3 +9,4 @@ python src/04_train_at_risk_model.py
 python src/05_segmentation_and_cohorts.py
 python src/06_statistical_tests.py
 python src/07_score_students.py
+python src/08_validate_at_risk_model.py
